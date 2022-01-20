@@ -16,7 +16,7 @@ include_once '../template/header.php';
                 </div>
                 <div class="card-body">
                     <form action = '<?=$url_website?>settings/action' class="form-horizontal" method="post" enctype="multipart/form-data" id="order-form">
-                        <img src="<?=$url_website?>assets/images/profile/<?=$login['photo']?>" >
+                        <img src="<?=$url_website?>assets/images/profile/<?=$login['photo']?>" width="100px" height="100px">
                         <br>
                         <span>Change Photo (Max 512kb, Format: jpeg,jpg, and png)</span>
                         <div class="form-group">
