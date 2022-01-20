@@ -1,15 +1,9 @@
 <?php
 
 require 'lib/function.php';
-
-
-
-echo 
-"Hello World <br>
-Today : ".
-format_date(date("Y-m-d")).", ".date("H:i:s"). " WIB";
-
-include 'template/header.php'
+require 'lib/session.php';
+require 'lib/is_login.php';
+include 'template/header.php';
 ?>
 
 
@@ -52,8 +46,8 @@ include 'template/header.php'
         </div> 
             
         <div class="col-lg-4 mb-3">
-            <header> <img src="assets/images/feed/instagram.png" height="10px" width="10px"> maulanadioo</header>
-            <span class="text-muted">Dio Maulana</span>
+            <header> <img src="<?=$url_website?>assets/images/profile/<?=$login['photo']?>" height="10px" width="10px"> <?=$login['username']?></header>
+            <span class="text-muted"><?=$login['name']?></span>
             <hr>
             
         </div>
