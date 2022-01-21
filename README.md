@@ -13,12 +13,14 @@ Penilian Khusus (DONE)
 - Bisa drag and Drop saat upload foto, upload otomatis redirect ke halaman dimana user saat upload (modal upload ada di file 'template/footer.php' )
 
 #day 4 (Sebagian)
+
 TASK(DONE)
 - Fungsi comment dan like button telah berfungsi (fungsi ini ada pada file api/action-comments.php dan api/action-likes.php)
 
 - Fungsi follow, unfollow dan follback sudah berfungsi (buka profile user untuk melakukan follow terhadap user tersebut, fungsi ini ada pada file api/action-follows.php)
 
 PENILIAN KHUSUS (DONE SEBAGIAN)
+
 - Poster bisa edit comment (Belum)
 
 - Poster bisa delete comment (Belum)
