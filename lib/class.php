@@ -256,3 +256,75 @@ class Profile {
     }
 
 }
+
+class Upload {
+
+    public function photo($photo, $caption){
+        global $db;
+        global $now_date;
+        $file_name = strtr( $photo['name'], " ", "-" );
+        $x = explode('.', $file_name);
+        $ekstensiFile = strtolower(end($x));
+        $sizeFile	= $photo['size'];
+        $tmpFile = $photo['tmp_name'];
+        if($photo['name'] == ''){
+            $result = 'Choose your photo first';
+        }elseif($ekstensiFile !== 'png' && $ekstensiFile !== 'jpg' && $ekstensiFile !== 'jpeg'){
+            $result = 'File type '.$ekstensiFile.' not allowed to upload';
+        } elseif(empty($caption)){
+            $result = 'Fill the caption';
+        } elseif(strlen($caption) > 400){
+            $result = 'Max Caption 400 Character';
+        } else {
+            // menentukan folder photo
+            $tempdir = "../assets/images/feeds/"; 
+            // target path photo setelah upload dann mengubah nama foto
+            $fileEditName = bin2hex(random_bytes(25)).$_SESSION['id'];
+            $nameWithEkstensi = $fileEditName.".".$ekstensiFile;
+            $tragetPath = $tempdir.$nameWithEkstensi;
+            // proses upload
+            $upload = move_uploaded_file($tmpFile, $tragetPath);
+            if($upload){
+                // resize
+                $PhotoUpload = $tragetPath;
+                $nameWithEkstensi = $nameWithEkstensi;
+                if($ekstensiFile == 'png'){
+                    $oriPhoto    = imagecreatefrompng ($PhotoUpload);
+                } else{
+                    $oriPhoto    = imagecreatefromjpeg ($PhotoUpload);
+                }
+                
+                $widthOri     = imageSX($oriPhoto);
+                $heightOri     = imageSY($oriPhoto);
+                $widthNew     = $widthOri;
+                $heightNew     = 400;
+
+                $img = imagecreatetruecolor($widthNew, $heightNew);
+                imagecopyresampled($img, $oriPhoto, 0, 0, 0, 0, $widthOri, $heightNew, $widthOri, $heightOri);
+                if($ekstensiFile == 'png'){
+                    imagepng($img, $PhotoUpload);
+                } else {
+                    imagejpeg($img, $PhotoUpload);
+                }
+                
+                imagedestroy($oriPhoto);
+                imagedestroy($img);
+
+                
+                
+                // update database user photo
+                
+                $insert = mysqli_query($db, "INSERT INTO feeds (user_id, photo, caption, created_at) VALUES ('".$_SESSION['id']."', '$nameWithEkstensi', '$caption', '$now_date')");
+                if($insert){
+                    $result = true;
+                } else {
+                    $result = "SQL Error";
+                }
+
+            } else {
+                $result = 'Upload Error';
+            }
+        }
+        return $result;
+    }
+}

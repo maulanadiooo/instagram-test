@@ -9,6 +9,8 @@
     <!-- cdn bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link href="<?=$url_website?>assets/css/style.css" rel="stylesheet">
+    <script src="<?=$url_website?>assets/js/main.js"></script>
 
     <!-- cdn toastr -->
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -38,39 +40,64 @@ unset($_SESSION['notif']);
 
 
 <div class="container ">
-    <div class="col-lg-12 mb-3">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="<?=$url_website?>">INSTAGRAM</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Upload</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="<?=$url_website?>assets/images/profile/<?=$login['photo']?>" width="10px" height="10px">
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="<?=$url_website?>accounts/edit">Setting</a></li>
-                        <li><a class="dropdown-item" href="<?=$url_website?>auth/signout">Logout</a></li>
+    <div class="row">
+        <div class="col-lg-2">
+
+        </div>
+        <div class="col-lg-8 mb-3">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="<?=$url_website?>">YOGRAM</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <form class="d-flex">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+                        </form>
+                        <?php
+                        if(isset($_SESSION['id'])){
+                        ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?=$url_website?><?=$login['username']?>">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#modalUpload">Upload</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="<?=$url_website?>assets/images/profile/<?=$login['photo']?>" width="10px" height="10px">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="<?=$url_website?><?=$login['username']?>">Profile</a></li>
+                            <li><a class="dropdown-item" href="<?=$url_website?>accounts/edit">Setting</a></li>
+                            <li><a class="dropdown-item" href="<?=$url_website?>auth/signout">Logout</a></li>
+                        </ul>
+                        </li>
+                        <?php
+                        } else {
+                        ?>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary btn-sm text-white" href="<?=$url_website?>auth/signin">Signin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a type="button" class="nav-link " href="<?=$url_website?>auth/signup">Signup</a>
+                        </li>
+                        <?php
+                        }
+                        ?>
+                        
                     </ul>
-                    </li>
-                </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </div>
+        <div class="col-lg-2">
+            
+        </div>
     </div>
+    
 
 </div>

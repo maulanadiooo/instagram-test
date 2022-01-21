@@ -36,6 +36,7 @@ function hp($nohp){
     return $hp;
 }
 
+// mengirim email dengan fungsi php mail
 function send_email($to, $subject, $message){
 
 	
@@ -49,6 +50,7 @@ function send_email($to, $subject, $message){
 
 }
 
+// fungsi merubah size dari image yang akan di upload
 function resizeImage($resourceType, $image_width, $image_height, $resizeWidth, $resizeHeight)
 {
     

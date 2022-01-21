@@ -65,15 +65,15 @@ include_once '../template/header.php';
                         <br>
                         <div class="form-group">
                             <div class="col-lg-12">
-                                <label  class="form-label">Email</label>
-                                <input type="email"  value="<?=$login['email']?>" class="form-control" disabled>
+                                <label  class="form-label">Username</label>
+                                <input type="text"  value="<?=$login['username']?>" class="form-control" disabled>
                             </div>
                         </div>
                         <br>
                         <div class="form-group">
                             <div class="col-lg-12">
-                                <label  class="form-label">username</label>
-                                <input type="text"  value="<?=$login['username']?>" class="form-control" disabled>
+                                <label  class="form-label">Phone</label>
+                                <input type="email"  value="<?=$login['email']?>" class="form-control" disabled>
                             </div>
                         </div>
                         <br>
@@ -127,5 +127,7 @@ include_once '../template/header.php';
     </div>
 </div> 
 
-</body>
-</html>
+<?php
+
+include "../template/footer.php";
+?>

@@ -9,3 +9,4 @@ RewriteRule ^(.*)$ $1.php
 
 RewriteRule ^confirm/([^/\.]+)/?$ auth/verify.php?token=$1
 RewriteRule ^reset-password/([^/\.]+)/?$ auth/reset-password?token=$1
+RewriteRule ^([^/\.]+)/?$ accounts/profile.php?user=$1
