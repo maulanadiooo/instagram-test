@@ -132,7 +132,9 @@ include 'template/header.php';
                         axios.get(apiUrl + `?page=` + this.halaman).then(response => {
                             this.lastPage = response.data.lastPage;
                             if(this.halaman <= this.lastPage){
-                                this.feeds.push(response.data.results[0]);
+                                for(const i in response.data.results){
+                                    this.feeds.push(response.data.results[i]);
+                                }
                             } else {
                                 return;
                             }
