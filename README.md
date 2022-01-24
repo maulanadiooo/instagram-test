@@ -23,7 +23,7 @@ PENILIAN KHUSUS (DONE)
 
 - Poster bisa edit comment (Done) -> yang bisa edit comment yang posting comment saja
 
-- Poster bisa delete comment (Belum) -> yang bisa delete comment yang posting comment/dan yang punya postingan
+- Poster bisa delete comment (Done) -> yang bisa delete comment yang posting comment/dan yang punya postingan
 
 - Semua user bisa like dan unlike masing-masing post (DONE) fungsi ini ada pada file  api/action-likes.php -> harus follow yang punya post terlebih dahulu
 
