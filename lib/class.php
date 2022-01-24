@@ -29,6 +29,27 @@ class Auth {
         return $result;
     }
 
+    public function signinadmin($email, $password){
+        global $db;
+        // check email
+        $checkmail = mysqli_query($db, "SELECT * FROM admin WHERE email = '$email' AND password = '$password' ");
+        $data_user = mysqli_fetch_assoc($checkmail);
+        if(!empty($email) && !empty($password)){
+            if(mysqli_num_rows($checkmail) == 1){ //checking email
+                
+                $_SESSION["admin"] = true;
+                $_SESSION['admin_id'] = $data_user['id'];
+                $result = true;
+                    
+            } else {
+                $result = 'Wrong Email Or Password';
+            }
+        } else {
+            $result = 'Input Empty';
+        }
+        return $result;
+    }
+
     public function signup($email, $password, $phone, $username, $dob, $name, $gender){
         global $db;
         global $url_website;
@@ -258,7 +279,7 @@ class Profile {
 }
 
 class Upload {
-
+ 
     public function photo($photo, $caption){
         global $db;
         global $now_date;
@@ -314,11 +335,11 @@ class Upload {
                 
                 // update database user photo
                 
-                $insert = mysqli_query($db, "INSERT INTO feeds (user_id, photo, caption, created_at) VALUES ('".$_SESSION['id']."', '$nameWithEkstensi', '$caption', '$now_date')");
+                $insert = mysqli_query($db, "INSERT INTO feeds (user_id, photo, caption, created_at) VALUES ('".$_SESSION['id']."', '$nameWithEkstensi', '$caption',  '$now_date')");
                 if($insert){
                     $result = true;
                 } else {
-                    $result = "SQL Error";
+                    $result = 'SQL Error';
                 }
 
             } else {

@@ -25,22 +25,46 @@ $checkFollowsbyUserFollow = mysqli_query($db, "SELECT * FROM follows WHERE user_
 
 if(mysqli_num_rows($checkFollowsbyUserId) > 0){
 
-    $following = mysqli_query($db, "SELECT COUNT(*) as following FROM follows WHERE status IN (1,4) AND user_id = '".$data_user['id']."' ");
-    $dataFollowing = mysqli_fetch_assoc($following);
-    $folowers = mysqli_query($db, "SELECT COUNT(*) as followers FROM follows WHERE user_id = '".$data_user['id']."' AND status IN (3,4)");
-    $dataFolowers = mysqli_fetch_assoc($folowers);
+    $following = mysqli_query($db, "SELECT * FROM follows WHERE status IN (1,4) AND user_id = '".$data_user['id']."' ");
     
+    $followers = mysqli_query($db, "SELECT * FROM follows WHERE user_id = '".$data_user['id']."' AND status IN (3,4)");
+    
+    
+} else {
+
+    $followers = false;
+    $following = false;
 }
 
 if(mysqli_num_rows($checkFollowsbyUserFollow) > 0){
 
-    $following = mysqli_query($db, "SELECT COUNT(*) as following FROM follows WHERE status IN (3,4) AND user_follow = '".$data_user['id']."' ");
-    $dataFollowing = mysqli_fetch_assoc($following);
-    $folowers = mysqli_query($db, "SELECT COUNT(*) as followers FROM follows WHERE user_follow = '".$data_user['id']."' AND status IN (1,4)");
-    $dataFolowers = mysqli_fetch_assoc($folowers);
+    $following1 = mysqli_query($db, "SELECT *  FROM follows WHERE status IN (3,4) AND user_follow = '".$data_user['id']."' ");
     
+    $followers1 = mysqli_query($db, "SELECT * FROM follows WHERE user_follow = '".$data_user['id']."' AND status IN (1,4)");
+    
+    
+} else {
+    $followers1 = false;
+    $following1 = false;
 }
-
+if($following && $following1){
+    $totalFollowing = mysqli_num_rows($following) + mysqli_num_rows($following1);
+} elseif($following){
+    $totalFollowing = mysqli_num_rows($following);
+} elseif($following1){
+    $totalFollowing = mysqli_num_rows($following1);
+}else {
+    $totalFollowing = 0;
+}
+if($followers && $followers1){
+    $totalFollowers = mysqli_num_rows($followers) + mysqli_num_rows($followers1);
+} elseif($followers){
+    $totalFollowers = mysqli_num_rows($followers);
+} elseif($followers1){
+    $totalFollowers = mysqli_num_rows($followers1);
+} else {
+    $totalFollowers = 0;
+}
 
 
 
@@ -90,7 +114,7 @@ if(mysqli_num_rows($checkUser) == 0){
                     ?>
                     
                     </h5> 
-                    <p><b><?=$totalFeed?></b> Posts | <a type="button"><b><?=$dataFolowers['followers']?></b> Followers</a> | <a type="button"><b><?=$dataFollowing['following']?></b> Following</a></p>
+                    <p><b><?=$totalFeed?></b> Posts | <a type="button"><b><?=$totalFollowers?></b> Followers</a> | <a type="button"><b><?=$totalFollowing?></b> Following</a></p>
                     <p><?=$data_user['name']?></p>
                 </div>
                 <hr>
@@ -108,7 +132,7 @@ if(mysqli_num_rows($checkUser) == 0){
                 <div class="modal fade" id="modalPost">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
-                        <form method="post" :action="actionPostUrl" autocomplete="off" @submit="submitform($event, feed.id)">
+                        
                                 
                                 <div class="modal-body">
                                     <div class="row">
@@ -123,8 +147,34 @@ if(mysqli_num_rows($checkUser) == 0){
                                             </span>
                                             <p class="text-muted">1 jam yang lalu</p>
                                             <div class="scrollModal">
-                                            <span>
-                                                <b>kang komentar</b> isi komentar
+                                            <span v-for="comment in comments">
+                                                <b>{{ comment.data.username }}</b> {{ comment.data.comment }}<br>
+                                            <p>
+                                                <!-- button like -->
+                                                <a type="button" class="text-muted" style="font-size:10px;" v-on:click="likeComment(comment.data.id)" v-if="comment.commentLiked == 'ya'"><i class="fa fa-thumbs-up" aria-hidden="true" style="color:#fc0505"></i></a> 
+                                                <a type="button" class="text-muted" style="font-size:10px;" v-on:click="likeComment(comment.data.id)" v-else><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a> 
+                                                <!-- button delete -->
+                                                <a type="button" class="text-muted" style="font-size:10px;" v-on:click="deleteComment(comment.data.id)" v-if="comment.data.user_id == <?=$login['id']?>"><i class="fa fa-trash" aria-hidden="true"></i></a> 
+                                                <a type="button" class="text-muted" style="font-size:10px;" v-on:click="deleteComment(comment.data.id)" v-else-if="comment.userFeedPoster == <?=$login['id']?>"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                <!-- edit button -->
+                                                <a type="button" class="text-muted" style="font-size:10px;" v-on:click="showComment(comment.data.id)" v-if="comment.data.user_id == <?=$login['id']?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+
+                                                <!-- modal edit -->
+                                                <div class="modal fade" id="editComment">
+                                                    <div class="modal-dialog modal-xl">
+                                                        <div class="modal-content">
+                                                            <div class="form-group">
+                                                                <div class="input-group mb-3">
+                                                                    <input type="text" class="form-control" :id="commentEditShow" :value="commentMessage" aria-describedby="button-addon2">
+                                                                    <button class="btn btn-outline-secondary"  v-on:click="sendEditComment(idComment)">Send</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </p>
+
+                                            
                                             </span>
                                             </div>
                                             <hr>
@@ -139,7 +189,6 @@ if(mysqli_num_rows($checkUser) == 0){
                                         </div>
                                     </div>
                                 </div>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -162,6 +211,8 @@ if(mysqli_num_rows($checkUser) == 0){
     var apiUrl = '<?=$url_website?>api/posts.php?q=<?=$data_user['id']?>';
     var deleteUrl = '<?=$url_website?>api/delete-posts.php';
     var actionPostUrl = '<?=$url_website?>api/action-posts.php';
+    var commentDetail = '<?=$url_website?>api/comments.php';
+    var likeCommentUrl = '<?=$url_website?>api/comment-like.php';
 
     var app = new Vue({
         el: '#controller',
@@ -175,7 +226,13 @@ if(mysqli_num_rows($checkUser) == 0){
             halaman: 1,
             haveResultStatus: false,
             resultStatusNull: true,
-            deleteStatus: false
+            deleteStatus: false,
+            comments: [],
+            commentDetail,
+            likeCommentUrl,
+            commentMessage: {},
+            commentEditShow: {},
+            idComment: {}
         },
         mounted: function(){
             this.getNextFeeds();
@@ -207,6 +264,9 @@ if(mysqli_num_rows($checkUser) == 0){
             },
             viewData(data){
                 this.feed = data;
+                axios.post(commentDetail, {id: data.id}).then((response) => {
+                    this.comments = response.data.results;
+                });
                 $('#modalPost').modal('show');
             },
             deleteData(id){
@@ -222,6 +282,56 @@ if(mysqli_num_rows($checkUser) == 0){
                     });
                 }
             },
+            likeComment(data){
+                axios.post(likeCommentUrl, {action: 'likeComment',q: data}).then(response => {
+                    if(response.data == 'commentLiked'){
+                        toastr.success('Comment Liked');
+                        $('#modalPost').modal('hide');
+                    } else if(response.data == 'commentUnliked'){
+                        toastr.success('Comment Unliked');
+                        $('#modalPost').modal('hide');
+                    }else {
+                        toastr.error(response.data);
+                    }
+                    
+                });
+               
+                
+            },
+            deleteComment(data){
+                axios.post(likeCommentUrl, {action:'deleteComment' ,q: data}).then(response => {
+                    if(response.data = 1){
+                        toastr.success('Comment Deleted');
+                        $('#modalPost').modal('hide');
+                    } else {
+                        toastr.error(response.data);
+                    }
+                    
+                });
+            }, 
+            showComment(data){
+                axios.post(likeCommentUrl, {action:'editComment' ,q: data}).then(response => {
+                   this.commentMessage = response.data;
+                   this.commentEditShow = 'edit'+data;
+                   this.idComment = data;
+                    
+                });
+                $('#editComment').modal('show');
+            },
+            sendEditComment(data){
+                var idCommentForEdit = $('#edit'+data).val();
+                axios.post(likeCommentUrl, {action:'updateComment' ,q: data, commentUpdate: idCommentForEdit}).then(response => {
+                   if(response.data == 1){
+                        toastr.success('Comment edited');
+                        $('#editComment').modal('hide');
+                        $('#modalPost').modal('hide');
+                   } else {
+                       toastr.error(response.data);
+                   }
+                    
+                });
+                
+            } 
         },
     });
 
@@ -243,7 +353,7 @@ if(mysqli_num_rows($checkUser) == 0){
         },
         methods: {
             getFollow(){
-                axios.get(followStatus).then((response) => {
+                axios.get(followStatus + '?user=<?=$data_user['id']?>' ).then((response) => {
                     this.statusFollow = response.data.results;
                 });
             },

@@ -9,16 +9,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $data = json_decode(file_get_contents("php://input"), true);
 $idPost = $db->real_escape_string(trim(htmlspecialchars($data['id'])));
 
-$comments = mysqli_query($db, "SELECT *, users.username FROM comments 
+$comments = mysqli_query($db, "SELECT comments.*, users.username FROM comments 
 join users ON comments.user_id = users.id
 WHERE feed_id = '$idPost' 
 ORDER by created_at ASC");
 $datas = [];
+$a= [];
 while ($data = mysqli_fetch_assoc($comments)) {
     $datas[] = $data;
+    foreach($datas as $key => $dataComment){
+        // check yang punya post
+        $checkFeedPoster = mysqli_query($db, "SELECT user_id FROM feeds WHERE id = '".$dataComment['feed_id']."' ");
+        $dataFeedPoster = mysqli_fetch_assoc($checkFeedPoster);
+        // check apakah user yang login like comment 
+        $checkCommentLikes = mysqli_query($db, "SELECT * FROM comment_likes WHERE comment_id = '".$dataComment['id']."' AND user_id = '".$login['id']."' ");
+        if(mysqli_num_rows($checkCommentLikes) > 0){
+            $dataCommentLikes = mysqli_fetch_assoc($checkCommentLikes);
+            $a[$key] = array('data' => $dataComment, 'userFeedPoster' => $dataFeedPoster['user_id'], 'commentLiked' => 'ya');
+        } else {
+            $a[$key] = array('data' => $dataComment, 'userFeedPoster' => $dataFeedPoster['user_id'], 'commentLiked' => 'no');
+        }
+        
+
+    }
     
 }
-$ret = array('results' => $datas);
+$ret = array('results' => $a);
 echo json_encode($ret); 
 }
 

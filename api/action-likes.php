@@ -12,7 +12,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // checkPost with idpost
     $checkPost = mysqli_query($db, "SELECT * FROM feeds WHERE id = '$idPost' ");
     $dataPost = mysqli_fetch_assoc($checkPost);
-    $totalLike = $dataPost['total_like'];
     if(mysqli_num_rows($checkPost) == 1){
         // check apakah user follow yang punya post
         $checkFollows = mysqli_query($db, "SELECT * FROM follows WHERE (user_id = '".$login['id']."' OR user_follow = '".$login['id']."'  )");
@@ -38,30 +37,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $checkUserLike = mysqli_query($db, "SELECT user_id FROM likes WHERE user_id = '".$login['id']."' AND feed_id = '$idPost' ");
                 if(mysqli_num_rows($checkUserLike) == 0){
                     // add like
-                    $addLiketoFeed = mysqli_query($db, "UPDATE feeds SET total_like = $totalLike + 1 WHERE id = '$idPost' ");
-                    if($addLiketoFeed){
-                        $insertLikeDetail = mysqli_query($db, "INSERT INTO likes (user_id, feed_id, created_at) VALUES ('".$login['id']."', '$idPost', '$now_date')");
-                        if($insertLikeDetail){
-                            $result = true;
-                        } else {
-                            $result = 'SQL Error(03)';
-                        }
+                   
+                    $insertLikeDetail = mysqli_query($db, "INSERT INTO likes (user_id, feed_id, created_at) VALUES ('".$login['id']."', '$idPost', '$now_date')");
+                    if($insertLikeDetail){
+                        $result = true;
                     } else {
-                        $result = 'SQL Error (01)';
+                        $result = 'SQL Error(03)';
                     }
                 } else {
                     // remove like
-                    $addLiketoFeed = mysqli_query($db, "UPDATE feeds SET total_like = $totalLike - 1 WHERE id = '$idPost' ");
-                    if($addLiketoFeed){
-                        $deleteLikeDetail = mysqli_query($db, "DELETE FROM likes WHERE user_id = '".$login['id']."' AND feed_id = '$idPost' ");
-                        if($deleteLikeDetail){
-                            $result = true;
-                        } else {
-                            $result = 'SQL Error(04)';
-                        }
+                    
+                    $deleteLikeDetail = mysqli_query($db, "DELETE FROM likes WHERE user_id = '".$login['id']."' AND feed_id = '$idPost' ");
+                    if($deleteLikeDetail){
+                        $result = true;
                     } else {
-                        $result = 'SQL Error (05)';
+                        $result = 'SQL Error(04)';
                     }
+                    
                 }
             }
                

@@ -17,22 +17,22 @@ Penilian Khusus (DONE)
 TASK(DONE)
 - Fungsi comment dan like button telah berfungsi (fungsi ini ada pada file api/action-comments.php dan api/action-likes.php)
 
-- Fungsi follow, unfollow dan follback sudah berfungsi (buka profile user untuk melakukan follow terhadap user tersebut, fungsi ini ada pada file api/action-follows.php)
+- Fungsi follow, unfollow dan follback sudah berfungsi (buka profile user untuk melakukan follow terhadap user tersebut, fungsi ini ada pada file api/action-follows.php) dan menghitung jumlah followers dan following
 
-PENILIAN KHUSUS (DONE SEBAGIAN)
+PENILIAN KHUSUS (DONE)
 
-- Poster bisa edit comment (Belum)
+- Poster bisa edit comment (Done) -> yang bisa edit comment yang posting comment saja
 
-- Poster bisa delete comment (Belum)
+- Poster bisa delete comment (Belum) -> yang bisa delete comment yang posting comment/dan yang punya postingan
 
-- Semua user bisa like dan unlike masing-masing post (DONE) fungsi ini ada pada file  api/action-likes.php
+- Semua user bisa like dan unlike masing-masing post (DONE) fungsi ini ada pada file  api/action-likes.php -> harus follow yang punya post terlebih dahulu
 
-- List 10 user yang belum di follow (Belum)
+- List 10 user yang belum di follow (Done) -> terdapat pada halaman awal disebelah kanan. Logika file ada pada folder api -> check-user-nofollow.php
 
-- Follow random user (Belum)
+- Follow random user (Done) -> dengan menekan icon + untuk follow suggest user
 
-- Hany bisa like dan comment post dari user yang difollow (done) fungsi ini ada pada file api/action-comments.php dan api/action-likes.php
+- Hanya bisa like dan comment post dari user yang difollow (done) fungsi ini ada pada file api/action-comments.php dan api/action-likes.php
 
 - Unfollow user (DONE) fungsi ini ada pada file api/action-follows.php 
 
-- (Bonus point) Like comment dari user lain (Belum)
+- (Bonus point) Like comment dari user lain (Done) -> hanya bisa like comment dari user yang telah di follow

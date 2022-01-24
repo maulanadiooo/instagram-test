@@ -9,7 +9,7 @@ include_once '../template/header.php';
 
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <div class="card">
                 <div class="card-header">
                 <i class='bx bxs-user'></i> <?=$login['username']?>
@@ -86,8 +86,7 @@ include_once '../template/header.php';
                 </div>
             </div>
         </div>
-        <br>
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <div class="card">
                 <div class="card-header">
                     <i class='bx bxs-key' ></i> Change Password

@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $dataUser = mysqli_fetch_assoc($checkUser);
     if(mysqli_num_rows($checkUser) == 1){
         
-        // check follows 
+        // untuk follow
         $checkFolows = mysqli_query($db, "SELECT * FROM follows WHERE (user_id = '".$login['id']."' AND user_follow = '$idUser' ) OR (user_id = '$idUser' AND user_follow = '".$login['id']."' )");
         if(mysqli_num_rows($checkFolows) == 1){
             $dataFollows = mysqli_fetch_assoc($checkFolows);
@@ -41,7 +41,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 $result = 'SQL Error (01)';
             }
-        } else {
+        } 
+        // untuk unfollow
+        else {
             $insertNewFollows = mysqli_query($db, "INSERT into follows (user_id, user_follow, status, created_at) VALUES ('".$login['id']."', '$idUser', '1', '$now_date') ");
             if($insertNewFollows){
                 $result = true;
