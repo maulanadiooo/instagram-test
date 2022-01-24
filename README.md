@@ -1,6 +1,6 @@
 # instagram-test
 
-#Day 3 complete
+# Day 3 complete
 
 Task (DONE)
 - Post user tampil 10 di halaman utama (pada file api/posts.php) dan saat scrolling reload 10 lagi, ada di file index.php
@@ -12,7 +12,7 @@ Task (DONE)
 Penilian Khusus (DONE)
 - Bisa drag and Drop saat upload foto, upload otomatis redirect ke halaman dimana user saat upload (modal upload ada di file 'template/footer.php' )
 
-#day 4 (Sebagian)
+# day 4 (Sebagian)
 
 TASK(DONE)
 - Fungsi comment dan like button telah berfungsi (fungsi ini ada pada file api/action-comments.php dan api/action-likes.php)
