@@ -180,8 +180,8 @@ if(mysqli_num_rows($checkUser) == 0){
                                             <hr>
                                             <br>
                                                 <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" placeholder="Tambahkan Komentar" aria-describedby="button-addon2">
-                                                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Kirim</button>
+                                                <input type="text" class="form-control" :id="feed.id" placeholder="Comments" aria-describedby="button-addon2">
+                                                <button class="btn btn-outline-secondary" type="button"  v-on:click="sendComment(feed.id)">Send</button>
                                                 </div>
                                             <div v-if="feed.user_id == <?=$login['id']?>">
                                             <a type="button" class="btn btn-default bg-danger" v-on:click="deleteData(feed.id)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
@@ -213,6 +213,7 @@ if(mysqli_num_rows($checkUser) == 0){
     var actionPostUrl = '<?=$url_website?>api/action-posts.php';
     var commentDetail = '<?=$url_website?>api/comments.php';
     var likeCommentUrl = '<?=$url_website?>api/comment-like.php';
+    var commentModalAction = '<?=$url_website?>api/action-comment-modal.php';
 
     var app = new Vue({
         el: '#controller',
@@ -232,7 +233,8 @@ if(mysqli_num_rows($checkUser) == 0){
             likeCommentUrl,
             commentMessage: {},
             commentEditShow: {},
-            idComment: {}
+            idComment: {},
+            commentModalAction
         },
         mounted: function(){
             this.getNextFeeds();
@@ -268,6 +270,20 @@ if(mysqli_num_rows($checkUser) == 0){
                     this.comments = response.data.results;
                 });
                 $('#modalPost').modal('show');
+            },
+            sendComment(data){
+                var commentModal = $('#'+data).val();
+                axios.post(commentModalAction, {id: data, comment: commentModal}).then((response) => {
+                    if(response.data == true){
+                        toastr.success('Comment posted');
+                        this.commentModal = $('#'+data).val('');
+                        $('#modalPost').modal('hide');
+                    } else {
+                        toastr.error(response.data);
+                    }
+                });
+               
+                
             },
             deleteData(id){
                 this.deleteUrl = deleteUrl + `?q=` + id;
