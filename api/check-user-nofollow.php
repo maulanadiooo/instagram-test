@@ -12,14 +12,24 @@ if($idUserLogin === $login['id']){
 
     $array = [];
     $a = mysqli_query($db, "SELECT user_follow FROM follows WHERE user_id = '$idUserLogin' AND status IN (1,4) ");
-    while($data = mysqli_fetch_assoc($a)){
-        $array[] = $data['user_follow'];
+    if(mysqli_num_rows($a) > 0){
+        while($data = mysqli_fetch_assoc($a)){
+            $array[] = $data['user_follow'];
+        } 
     }
+    
     $b = mysqli_query($db, "SELECT user_id FROM follows WHERE user_follow = '$idUserLogin' AND status IN (3,4) ");
-    while($datas = mysqli_fetch_assoc($b)){
-        $array[] = $datas['user_id'];
+    if(mysqli_num_rows($b) > 0){
+        while($datas = mysqli_fetch_assoc($b)){
+            $array[] = $datas['user_id'];
+        }
     }
-    $followed = implode(",", $array);
+    if($array == null){
+       $followed = 0; 
+    } else {
+        $followed = implode(",", $array); 
+    }
+    
     $check = mysqli_query($db,"SELECT users.id,users.username,users.photo,users.name
     FROM users
     WHERE id != '".$login['id']."' AND id NOT IN ($followed)
