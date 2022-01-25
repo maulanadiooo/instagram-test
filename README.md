@@ -44,7 +44,7 @@ Task (DONE)
 
 untuk access menu admin:
 
-localhost/admin/signin
+localhost/admin/auth/signin
 
 username: admin@admin.com
 
