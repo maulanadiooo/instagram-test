@@ -16,7 +16,6 @@ while($data_user = mysqli_fetch_assoc($user)){
 
       if(mysqli_num_rows($checkFollowsbyUserId) > 0){
 
-          $following = mysqli_query($db, "SELECT * FROM follows WHERE status IN (1,4) AND user_id = '".$data_user['id']."' ");
           
           $followers = mysqli_query($db, "SELECT * FROM follows WHERE user_id = '".$data_user['id']."' AND status IN (3,4)");
           
@@ -24,29 +23,18 @@ while($data_user = mysqli_fetch_assoc($user)){
       } else {
 
           $followers = false;
-          $following = false;
       }
 
       if(mysqli_num_rows($checkFollowsbyUserFollow) > 0){
 
-          $following1 = mysqli_query($db, "SELECT *  FROM follows WHERE status IN (3,4) AND user_follow = '".$data_user['id']."' ");
           
           $followers1 = mysqli_query($db, "SELECT * FROM follows WHERE user_follow = '".$data_user['id']."' AND status IN (1,4)");
           
           
       } else {
           $followers1 = false;
-          $following1 = false;
       }
-      if($following && $following1){
-          $totalFollowing = mysqli_num_rows($following) + mysqli_num_rows($following1);
-      } elseif($following){
-          $totalFollowing = mysqli_num_rows($following);
-      } elseif($following1){
-          $totalFollowing = mysqli_num_rows($following1);
-      }else {
-          $totalFollowing = 0;
-      }
+      
       if($followers && $followers1){
           $totalFollowers = mysqli_num_rows($followers) + mysqli_num_rows($followers1);
       } elseif($followers){
@@ -56,9 +44,13 @@ while($data_user = mysqli_fetch_assoc($user)){
       } else {
           $totalFollowers = 0;
       }
-      $total_Followers[] = array('user' => $data_user['username'], 'photo' => $data_user['photo'], 'totalFollowers' => $totalFollowers);
+      $total_Followers[] = array('totalFollowers' => $totalFollowers."_".$data_user['id']);
 }
 $userWithMostFollowers = max($total_Followers);
+$explode = explode("_", $userWithMostFollowers['totalFollowers']);
+$followersTotal = $explode[0];
+$user_id = $explode[1];
+$getuserInfo = mysqli_fetch_assoc(mysqli_query($db, "SELECT * FROM users WHERE id = '$user_id' "));
 
 // poost with most likes
 $postFeed = mysqli_query($db, "SELECT count(feed_id) as total, feed_id, feeds.*, users.username 
