@@ -97,18 +97,6 @@ $reqUrl = substr($_SERVER['REQUEST_URI'],1);
         </div>
       </div>
 
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -116,7 +104,7 @@ $reqUrl = substr($_SERVER['REQUEST_URI'],1);
                with font-awesome or any other icon font library -->
           <li class="nav-item">
             <a href="<?=$url_website?>admin/home" class="nav-link <?= $reqUrl == 'admin/home' ? 'active' : '' ?> ">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-home"></i>
               <p>
                 home
                 
@@ -126,9 +114,19 @@ $reqUrl = substr($_SERVER['REQUEST_URI'],1);
           </li>
           <li class="nav-item">
             <a href="<?=$url_website?>admin/posts/" class="nav-link <?= $reqUrl == 'admin/posts/' ? 'active' : '' ?> ">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-book"></i>
               <p>
                 Post
+                
+              </p>
+            </a>
+            
+          </li>
+          <li class="nav-item">
+            <a href="<?=$url_website?>admin/users/" class="nav-link <?= $reqUrl == 'admin/users/' ? 'active' : '' ?> ">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                User
                 
               </p>
             </a>

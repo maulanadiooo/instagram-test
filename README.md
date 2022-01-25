@@ -12,7 +12,7 @@ Task (DONE)
 Penilian Khusus (DONE)
 - Bisa drag and Drop saat upload foto, upload otomatis redirect ke halaman dimana user saat upload (modal upload ada di file 'template/footer.php' )
 
-# day 4 (Sebagian)
+# day 4 (DONE)
 
 TASK(DONE)
 - Fungsi comment dan like button telah berfungsi (fungsi ini ada pada file api/action-comments.php dan api/action-likes.php)
@@ -36,3 +36,23 @@ PENILIAN KHUSUS (DONE)
 - Unfollow user (DONE) fungsi ini ada pada file api/action-follows.php 
 
 - (Bonus point) Like comment dari user lain (Done) -> hanya bisa like comment dari user yang telah di follow
+
+# Day 5 (DONE)
+======
+Task (DONE)
+- Control panel backend untuk edit delete user, post, dan comment -> access url 
+
+untuk access menu admin:
+
+localhost/admin/signin
+
+username: admin@admin.com
+
+pass: 123456
+
+Penilaian Khusus (DONE)
+- Control panel diproteksi oleh username & password (hardcode dulu) (DONE)
+- View dan delete post dari list (DONE) -> pada file admin/posts/index.php
+- View dan delete comment dari list untuk masing-masing post (DONE) -> file ada di admin/posts/comment-detail.php -> diakses dengan cara klik 'all comment' pada masing-masing list posts pada url http://localhost/admin/posts/ 
+- View dan delete user account dari list (DONE) -> ada pada file admin/users/index.php 
+- (Bonus point) Make a dashboard showing post, comment statistic, popular user (DONE) -> chart bulanan total likes dan comments yang terjadi ada pada file admin/home.php

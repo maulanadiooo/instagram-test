@@ -38,11 +38,16 @@
 <script src="<?=$url_website?>admin/assets/plugins/summernote/summernote-bs4.min.js"></script>
 <!-- overlayScrollbars -->
 <script src="<?=$url_website?>admin/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- ChartJS -->
+<script src="<?=$url_website?>admin/assets/plugins/chart.js/Chart.min.js"></script>
+
 <!-- AdminLTE App -->
 <script src="<?=$url_website?>admin/assets/js/adminlte.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
 
+
+<!-- vue dan axios -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </body>

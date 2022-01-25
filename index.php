@@ -83,6 +83,9 @@ include 'template/header.php';
                                             </span>
                                         </div>
                                         <hr>
+                                        <p>
+                                            <a type="button" v-on:click="likePost(feed.id)" ><i class="fa fa-heart" style="color:#fc0505" v-if="liked == 'ya'"></i> <i class="fa fa-heart-o" v-else></i></a>
+                                        </p>
                                         <br>
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" :id="feed.id" placeholder="Comments" aria-describedby="button-addon2">
@@ -153,7 +156,8 @@ include 'template/header.php';
             likeCommentUrl,
             commentMessage: {},
             commentEditShow: {},
-            idComment: {}
+            idComment: {},
+            liked: 'no',
         },
         mounted: function(){
             this.getNextFeeds();
@@ -208,6 +212,7 @@ include 'template/header.php';
                 this.feed = data;
                 axios.post(commentDetail, {id: data.id}).then((response) => {
                     this.comments = response.data.results;
+                    this.liked = response.data.likedBySession;
                 });
                 $('#modalPost').modal('show');
             },

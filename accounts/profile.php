@@ -138,9 +138,11 @@ if(mysqli_num_rows($checkUser) == 0){
                                     <div class="row">
                                         <div class="col-lg-8">
                                             <img v-bind:src="'<?=$url_website?>assets/images/feeds/' + feed.photo" width="300px" height="300px">
+                                            
                                         </div>
                                         <div class="col-lg-4">
                                             <b><p>{{ feed.username }} </p></b>
+                                            
                                             
                                             <span>
                                                 <b>{{ feed.username }}</b> {{ feed.caption }}
@@ -178,6 +180,9 @@ if(mysqli_num_rows($checkUser) == 0){
                                             </span>
                                             </div>
                                             <hr>
+                                            <p>
+                                                <a type="button" v-on:click="likePost(feed.id)" ><i class="fa fa-heart" style="color:#fc0505" v-if="liked == 'ya'"></i> <i class="fa fa-heart-o" v-else></i></a>
+                                            </p>
                                             <br>
                                                 <div class="input-group mb-3">
                                                 <input type="text" class="form-control" :id="feed.id" placeholder="Comments" aria-describedby="button-addon2">
@@ -214,6 +219,7 @@ if(mysqli_num_rows($checkUser) == 0){
     var commentDetail = '<?=$url_website?>api/comments.php';
     var likeCommentUrl = '<?=$url_website?>api/comment-like.php';
     var commentModalAction = '<?=$url_website?>api/action-comment-modal.php';
+    var likeUrl = '<?=$url_website?>api/action-likes.php';
 
     var app = new Vue({
         el: '#controller',
@@ -234,7 +240,9 @@ if(mysqli_num_rows($checkUser) == 0){
             commentMessage: {},
             commentEditShow: {},
             idComment: {},
-            commentModalAction
+            commentModalAction,
+            liked: 'no',
+            likeUrl
         },
         mounted: function(){
             this.getNextFeeds();
@@ -268,6 +276,7 @@ if(mysqli_num_rows($checkUser) == 0){
                 this.feed = data;
                 axios.post(commentDetail, {id: data.id}).then((response) => {
                     this.comments = response.data.results;
+                    this.liked = response.data.likedBySession;
                 });
                 $('#modalPost').modal('show');
             },
@@ -347,7 +356,18 @@ if(mysqli_num_rows($checkUser) == 0){
                     
                 });
                 
-            } 
+            },
+            likePost(data){
+                axios.post(likeUrl, {q: data}).then(response => {
+                    if(response.data == 1){
+                        toastr.success('Success');
+                        $('#modalPost').modal('hide');
+                    } else {
+                        toastr.error(response.data);
+                    }
+                    
+                });
+            },
         },
     });
 

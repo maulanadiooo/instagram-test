@@ -5,7 +5,7 @@ require '../lib/function.php';
 // menampilkan API post
 $userId = $db->real_escape_string(trim(htmlspecialchars($_GET['q'])));
 // jumlah per Halaman
-$dataPerHalaman = 12;
+$dataPerHalaman = 50;
 
 $feeds = mysqli_query($db, "SELECT feeds.*, users.username, users.photo as photoUser FROM feeds 
         join users  ON feeds.user_id = users.id 

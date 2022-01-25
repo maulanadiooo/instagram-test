@@ -34,7 +34,13 @@ while ($data = mysqli_fetch_assoc($comments)) {
     }
     
 }
-$ret = array('results' => $a);
+$checkFeedLike = mysqli_query($db, "SELECT * FROM likes WHERE feed_id = '$idPost' AND user_id = '".$login['id']."' ");
+if(mysqli_num_rows($checkFeedLike) == 1){
+    $liked = 'ya';
+} else {
+    $liked = 'no';
+}
+$ret = array('results' => $a, 'likedBySession' => $liked);
 echo json_encode($ret); 
 }
 
