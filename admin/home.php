@@ -2,7 +2,6 @@
 require '../lib/function.php';
 require '../lib/admin-session.php';
 require 'template/header.php';
-require '../lib/admin-session.php';
 require 'lib/popular.php';
 
 
@@ -139,9 +138,9 @@ foreach($label_line as $key => $value){
                     <div class="row p-5" >
                     
                       <div class="col-lg-3 col-sm-6">
-                        <img src="<?=$url_website?>assets/images/profile/<?=$userWithMostFollowers['photo']?>" width="128px" height="128px">
-                          <a class="users-list-name" href="<?=$url_website.$userWithMostFollowers['user']?>"><?=$userWithMostFollowers['user']?></a>
-                          <p>Total Followers: <?=$userWithMostFollowers['totalFollowers']?></p>
+                        <img src="<?=$url_website?>assets/images/profile/<?=$getuserInfo['photo']?>" width="128px" height="128px">
+                          <a class="users-list-name" href="<?=$url_website.$getuserInfo['username']?>"><?=$getuserInfo['username']?></a>
+                          <p>Total Followers: <?=$followersTotal?></p>
                       </div>
                     </div>
                     
